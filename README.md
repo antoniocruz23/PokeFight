@@ -22,7 +22,7 @@ Game can be played using the same keyboard for both players, for the keys have b
  
 For the two players, the currently mapped keys are as following : 
 
-| | Kree | Bee | 
+| | Blastoise  | Zapdos | 
 |:---|:---:|:---:|
 |Move Up | W | Up arrow|
 |Move Left | A | Left arrow|
