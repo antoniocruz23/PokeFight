@@ -1,5 +1,7 @@
 import java.awt.*;
-import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class Sprite {
 
@@ -18,10 +20,10 @@ public class Sprite {
         visible = true;
     }
 
-    protected void loadImage(String imageName) {
+    protected void loadImage(String imageName) throws IOException {
 
-        ImageIcon ii = new ImageIcon(imageName);
-        image = ii.getImage();
+        URL url = new URL(imageName);
+        image = ImageIO.read(url);
     }
 
     protected void getImageDimensions() {

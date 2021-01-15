@@ -2,11 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Ui extends JFrame {
 
     private JLabel titleLabel;
-    private JPanel titlePanel, buttonPanel, loadButtonPanel;
+    private JPanel titlePanel, buttonPanel;
     private JButton startButton, loadButton;
 
     static Music musicBackground = new Music("/resources/music/music.midi");
@@ -94,7 +95,11 @@ public class Ui extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             //buttonSound.play();
-            gameScreen();
+            try {
+                gameScreen();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
@@ -103,13 +108,19 @@ public class Ui extends JFrame {
             titlePanel.setVisible(false);
             buttonPanel.setVisible(false);
             //buttonSound.play();
-            Board board = new Board();
+
+            Board board = null;
+            try {
+                board = new Board();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             board.loadGame();
             add(board);
         }
     };
 
-    private void gameScreen() {
+    private void gameScreen() throws IOException {
         titlePanel.setVisible(false);
         buttonPanel.setVisible(false);
 

@@ -1,9 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.List;
 import javax.swing.*;
 
@@ -33,12 +30,12 @@ public class Board extends JPanel implements ActionListener {
     protected Player player2;
 
 
-    public Board() {
+    public Board() throws IOException {
 
         initBoard();
     }
 
-    private void initBoard() {
+    private void initBoard() throws IOException {
 
         addKeyListener(new TAdapter());
         ImageIcon i = new ImageIcon("resources/images/battle.jpeg");
@@ -158,9 +155,21 @@ public class Board extends JPanel implements ActionListener {
 
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W,
-                        KeyEvent.VK_ESCAPE, KeyEvent.VK_5 -> player.keyPressed(e);
+                        KeyEvent.VK_ESCAPE, KeyEvent.VK_5 -> {
+                    try {
+                        player.keyPressed(e);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
 
-                case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP -> player2.keyPressed2(e);
+                case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP -> {
+                    try {
+                        player2.keyPressed2(e);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
             }
         }
 

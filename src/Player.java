@@ -1,9 +1,6 @@
-import pokeapi.bittle.models.pokemon.Pokemon;
-import pokeapi.bittle.utils.Client;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +14,6 @@ public class Player extends Sprite {
     private final int BOARD_HEIGHT = 250;
 
     private final Pokemon pokemon;
-    private final String pokemonName;
 
     private final String IMAGE_RIGHT;
     private final String IMAGE_LEFT;
@@ -26,19 +22,18 @@ public class Player extends Sprite {
 
     private List<SpecialAttack> specialAttacks;
 
-    public Player(int x, int y, String pokemonName) {
+    public Player(int x, int y, String pokemonName) throws IOException {
         super(x, y);
 
-        pokemon = Client.getPokemonByName(pokemonName);
-        this.pokemonName = pokemonName;
+        pokemon = new Pokemon(pokemonName);
 
-        IMAGE_RIGHT = "resources/sprites/sprites/pokemon/back/" + pokemon.getId() + ".png";
-        IMAGE_LEFT = "resources/sprites/sprites/pokemon/" + pokemon.getId() + ".png";
+        IMAGE_RIGHT = pokemon.getRightSprite();
+        IMAGE_LEFT = pokemon.getLeftSprite();
 
         initPlayer();
     }
 
-    private void initPlayer() {
+    private void initPlayer() throws IOException {
 
         specialAttacks = new ArrayList<>();
         loadImage(IMAGE_RIGHT);
@@ -92,15 +87,11 @@ public class Player extends Sprite {
         this.health -= damage;
     }
 
-    public String getPokemonName() {
-        return pokemonName;
-    }
-
     public Rectangle getRect() {
         return new Rectangle(x, y, 150, 170);
     }
 
-    protected void keyPressed(KeyEvent e) {
+    protected void keyPressed(KeyEvent e) throws IOException {
 
         int key = e.getKeyCode();
 
@@ -138,7 +129,7 @@ public class Player extends Sprite {
         }
     }
 
-    protected void keyPressed2(KeyEvent e){
+    protected void keyPressed2(KeyEvent e) throws IOException {
 
         int key = e.getKeyCode();
 
