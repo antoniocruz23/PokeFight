@@ -13,7 +13,7 @@ public class SpecialAttack extends Sprite {
 
     private void initSpecialAttack() {
 
-        //loadImage("resources/images/blue-fireball.gif");
+        specialAttackImage("resources/images/blue-fireball.gif");
         getImageDimensions();
         getRect();
     }

@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Sprite {
 
@@ -24,6 +25,11 @@ public class Sprite {
 
         URL url = new URL(imageName);
         image = ImageIO.read(url);
+    }
+
+    protected void specialAttackImage(String specialAttackImage) {
+        ImageIcon ii = new ImageIcon(specialAttackImage);
+        image = ii.getImage();
     }
 
     protected void getImageDimensions() {
