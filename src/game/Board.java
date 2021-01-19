@@ -160,9 +160,9 @@ public class Board extends JPanel implements ActionListener {
                     }
                 }
 
-                case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP -> {
+                case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_ENTER -> {
                     try {
-                        player2.keyPressed2(e);
+                        player2.keyPressed(e);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -193,129 +193,34 @@ public class Board extends JPanel implements ActionListener {
                     player.keyReleased(e);
 
                 case KeyEvent.VK_LEFT:
-                    player2.keyReleased2(e);
+                    player2.keyReleased(e);
 
                 case KeyEvent.VK_RIGHT:
-                    player2.keyReleased2(e);
+                    player2.keyReleased(e);
 
                 case KeyEvent.VK_UP:
-                    player2.keyReleased2(e);
+                    player2.keyReleased(e);
+
+                case KeyEvent.VK_ENTER:
+                    player2.keyReleased(e);
             }
         }
     }
 
     private void healthBar(Graphics2D g2d){
 
-        if(player.getHealth() == 100) {
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 100) * 250, 15);
+        g2d.setColor(Color.blue);
+        g2d.fillRect(40, 27, settings.getHEALTH_BAR_PLAYER1(), 15);
+        g2d.fillRect(500, 27, settings.getHEALTH_BAR_PLAYER2(),15);
 
-        }
-        if(player.getHealth() == 90){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 90) * 228, 15);
-
-        }
-        if(player.getHealth() == 80){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 80) * 206, 15);
-
-        }
-        if(player.getHealth() == 70){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 70) * 184, 15);
-
-        }
-        if(player.getHealth() == 60){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 60) * 162, 15);
-
-        }
-        if(player.getHealth() == 50){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 50) * 140, 15);
-
-        }
-        if(player.getHealth() == 40){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 40) * 118, 15);
-
-        }
-        if(player.getHealth() == 30){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 30) * 96, 15);
-
-        }
-        if(player.getHealth() == 20){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 20) * 74, 15);
-
-        }
-        if(player.getHealth() == 10){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth() / 10) * 52, 15);
-
-        }
-        if(player.getHealth() <= 0){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(40,27, (player.getHealth()) * 30, 15);
-
+        if(player.isIntersected()){
+            settings.setHEALTH_BAR_PLAYER1();
+            player.setIntersected(false);
         }
 
-        if(player2.getHealth() == 100) {
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 100) * 250, 15);
-
-        }
-        if(player2.getHealth() == 90){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 90) * 228, 15);
-
-        }
-        if(player2.getHealth() == 80){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 80) * 206, 15);
-
-        }
-        if(player2.getHealth() == 70){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 70) * 184, 15);
-
-        }
-        if(player2.getHealth() == 60){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 60) * 162, 15);
-
-        }
-        if(player2.getHealth() == 50){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 50) * 140, 15);
-
-        }
-        if(player2.getHealth() == 40){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 40) * 118, 15);
-
-        }
-        if(player2.getHealth() == 30){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 30) * 96, 15);
-
-        }
-        if(player2.getHealth() == 20){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 20) * 74, 15);
-
-        }
-        if(player2.getHealth() == 10){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth() / 10) * 52, 15);
-
-        }
-        if(player2.getHealth() <= 0){
-            g2d.setColor(Color.blue);
-            g2d.fillRect(500, 27, (player2.getHealth()) * 30, 15);
-
+        if(player2.isIntersected()){
+            settings.setHEALTH_BAR_PLAYER2();
+            player2.setIntersected(false);
         }
     }
 

@@ -30,12 +30,7 @@ public class SpecialAttack extends Sprite {
             setVisible(false);
         }
 
-        if(getRect().intersects(player.getRect())){
-            System.out.println("touch-----------------------" + x);
-            player.setDamage(10);
-            setVisible(false);
-        }
-        System.out.println(x + " SPECIAL ATTACK");
+        intersects(player);
     }
 
     public void moveLeft() {
@@ -48,5 +43,17 @@ public class SpecialAttack extends Sprite {
 
     public Rectangle getRect() {
         return new Rectangle(x, y, 90, 85);
+    }
+
+    public void intersects(Player player) {
+
+        if(getRect().intersects(player.getRect())){
+            System.out.println("touch-----------------------" + x);
+
+            player.setIntersected(true);
+            player.setDamage(10);
+            setVisible(false);
+        }
+        System.out.println(x + " SPECIAL ATTACK");
     }
 }

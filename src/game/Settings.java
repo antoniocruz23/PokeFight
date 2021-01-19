@@ -12,6 +12,9 @@ public class Settings {
     private final int PLAYER_WIDTH_LIMIT = 650;
     private final int PLAYER_HEIGHT_LIMIT = 250;
 
+    private int HEALTH_BAR_PLAYER1 = 250;
+    private int HEALTH_BAR_PLAYER2 = 250;
+
     private final String UI_BACKGROUND_COLOR = "#F5A53C";
 
     public int getGAME_WIDTH() {
@@ -44,5 +47,21 @@ public class Settings {
 
     public String getUI_BACKGROUND_COLOR() {
         return UI_BACKGROUND_COLOR;
+    }
+
+    public int getHEALTH_BAR_PLAYER1() {
+        return HEALTH_BAR_PLAYER1;
+    }
+
+    public void setHEALTH_BAR_PLAYER1() {
+        this.HEALTH_BAR_PLAYER2 -= 22;
+    }
+
+    public int getHEALTH_BAR_PLAYER2() {
+        return HEALTH_BAR_PLAYER2;
+    }
+
+    public void setHEALTH_BAR_PLAYER2() {
+        this.HEALTH_BAR_PLAYER2 -= 22;
     }
 }

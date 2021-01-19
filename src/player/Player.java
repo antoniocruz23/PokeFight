@@ -14,6 +14,7 @@ public class Player extends Sprite {
     private int POSITION_X;
     private int POSITION_Y;
     private final Settings settings = new Settings();
+    private boolean intersected = false;
 
     private final Pokemon pokemon;
 
@@ -70,7 +71,7 @@ public class Player extends Sprite {
         return specialAttacks;
     }
 
-    private void specialAttack() {
+    public void specialAttack() {
         specialAttacks.add(new SpecialAttack(x + width, y + height / 2));
     }
 
@@ -130,11 +131,8 @@ public class Player extends Sprite {
         if (key == KeyEvent.VK_5) {
             new Board().saveGame();
         }
-    }
 
-    public void keyPressed2(KeyEvent e) throws IOException {
-
-        int key = e.getKeyCode();
+        /* PLAYER 2 CONTROLLER */
 
         if (key == KeyEvent.VK_LEFT) {
             POSITION_X = -3;
@@ -152,6 +150,11 @@ public class Player extends Sprite {
 
         if (key == KeyEvent.VK_UP && canJump()) {
             POSITION_Y = -5;
+            return;
+        }
+
+        if (key == KeyEvent.VK_ENTER) {
+            specialAttack();
         }
     }
 
@@ -170,11 +173,6 @@ public class Player extends Sprite {
         if (key == KeyEvent.VK_W) {
             POSITION_Y = 3;
         }
-    }
-
-    public void keyReleased2(KeyEvent e) {
-
-        int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
             POSITION_X = 0;
@@ -187,5 +185,13 @@ public class Player extends Sprite {
         if (key == KeyEvent.VK_UP) {
             POSITION_Y = 3;
         }
+    }
+
+    public void setIntersected(boolean intersected) {
+        this.intersected = intersected;
+    }
+
+    public boolean isIntersected() {
+        return intersected;
     }
 }
