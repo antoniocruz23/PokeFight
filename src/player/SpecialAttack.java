@@ -51,7 +51,7 @@ public class SpecialAttack extends Sprite {
             System.out.println("touch-----------------------" + x);
 
             player.setIntersected(true);
-            player.setDamage(10);
+            player.setDamage();
             setVisible(false);
         }
         System.out.println(x + " SPECIAL ATTACK");

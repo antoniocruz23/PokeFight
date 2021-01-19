@@ -9,9 +9,6 @@ import player.SpecialAttack;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final int PLAYER1_X = 100;
-    private final int PLAYER2_X = 550;
-
     private boolean ingame = true;
     private final int DELAY = 15;
 
@@ -41,8 +38,8 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
 
-        player = new Player(PLAYER1_X, settings.getPLAYER_HEIGHT_LIMIT(), "blastoise");
-        player2 = new Player(PLAYER2_X, settings.getPLAYER_HEIGHT_LIMIT(), "zapdos");
+        player = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
+        player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -58,11 +55,11 @@ public class Board extends JPanel implements ActionListener {
 
         super.paintComponent(g);
 
-        if (ingame) {
+        if (ingame){
 
             drawObjects(g);
 
-        } else {
+        } if (settings.getGAME_TIME() == 0 || player.getHealth() <= 0 || player2.getHealth() <= 0) {
 
             drawGameOver(g);
         }
@@ -95,16 +92,29 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void drawGameOver(Graphics g) {
-
-        String msg = "Game Over";
+        String msg;
         Font font = new Font("Helvetica", Font.BOLD, 50);
         FontMetrics fm = getFontMetrics(font);
+
+        setBackground(Color.black);
+        setIngame(false);
+        timeLabel.setVisible(false);
+        Ui.musicBackground.stop();
+
+        if(player.getHealth() <= 0){
+            msg = player2.getPokemon().getPokeName().toUpperCase() + " WIN!!";
+
+        }
+        else if(player2.getHealth() <= 0){
+            msg = player.getPokemon().getPokeName().toUpperCase() + " WIN!!";
+
+        } else {
+            msg = "Game Over";
+        }
 
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString(msg, (settings.getGAME_WIDTH() - fm.stringWidth(msg)) / 2, settings.getGAME_HEIGHT() / 2);
-        setBackground(Color.black);
-        Ui.musicBackground.stop();
     }
 
     @Override

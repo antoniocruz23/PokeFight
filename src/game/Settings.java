@@ -2,6 +2,9 @@ package game;
 
 public class Settings {
 
+    private final String PLAYER1_POKEMON = "blastoise";
+    private final String PLAYER2_POKEMON = "zapdos";
+
     private final int GAME_WIDTH = 800;
     private final int GAME_HEIGHT = 500;
     protected int GAME_TIME = 300;
@@ -12,8 +15,13 @@ public class Settings {
     private final int PLAYER_WIDTH_LIMIT = 650;
     private final int PLAYER_HEIGHT_LIMIT = 250;
 
+    private final int PLAYER1_INIT_X = 80;
+    private final int PLAYER2_INIT_X = 550;
+
     private int HEALTH_BAR_PLAYER1 = 250;
     private int HEALTH_BAR_PLAYER2 = 250;
+
+    private int SPECIAL_ATTACK_DAMAGE = 10;
 
     private final String UI_BACKGROUND_COLOR = "#F5A53C";
 
@@ -63,5 +71,25 @@ public class Settings {
 
     public void setHEALTH_BAR_PLAYER2() {
         this.HEALTH_BAR_PLAYER2 -= 22;
+    }
+
+    public int getSPECIAL_ATTACK_DAMAGE() {
+        return SPECIAL_ATTACK_DAMAGE;
+    }
+
+    public int getPLAYER1_INIT_X() {
+        return PLAYER1_INIT_X;
+    }
+
+    public int getPLAYER2_INIT_X() {
+        return PLAYER2_INIT_X;
+    }
+
+    public String getPLAYER1_POKEMON() {
+        return PLAYER1_POKEMON;
+    }
+
+    public String getPLAYER2_POKEMON() {
+        return PLAYER2_POKEMON;
     }
 }

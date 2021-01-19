@@ -87,8 +87,8 @@ public class Player extends Sprite {
         this.health = health;
     }
 
-    public void setDamage(int damage) {
-        this.health -= damage;
+    public void setDamage() {
+        this.health -= settings.getSPECIAL_ATTACK_DAMAGE();
     }
 
     public Rectangle getRect() {
@@ -124,7 +124,8 @@ public class Player extends Sprite {
         }
 
         if (key == KeyEvent.VK_ESCAPE) {
-            new Ui();
+
+            new Ui().start();
             return;
         }
 
@@ -193,5 +194,9 @@ public class Player extends Sprite {
 
     public boolean isIntersected() {
         return intersected;
+    }
+
+    public Pokemon getPokemon() {
+        return pokemon;
     }
 }
