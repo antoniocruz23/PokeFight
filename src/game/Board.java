@@ -1,20 +1,16 @@
+package game;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.List;
 import javax.swing.*;
+import player.*;
+import player.SpecialAttack;
 
 public class Board extends JPanel implements ActionListener {
 
     private final int PLAYER1_X = 100;
     private final int PLAYER2_X = 550;
-    private final int PLAYER_Y = 250;
-
-    private final int PLAYER_WIDTH = 200;
-    private final int PLAYER_HEIGHT = 200;
-
-    private final int B_WIDTH = 800;
-    private final int B_HEIGHT = 500;
 
     private boolean ingame = true;
     private final int DELAY = 15;
@@ -22,12 +18,13 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Image image;
     private JLabel timeLabel;
-    private int timeCount = 300;
-    private int currentTime = 500;
-    private final Font timeFont = new Font("Times New Roman", Font.BOLD, 35);
 
-    protected Player player;
-    protected Player player2;
+    private int timeOfLoad = 500;
+    private final Font timeFont = new Font("Times New Roman", Font.BOLD, 35);
+    private final Settings settings = new Settings();
+
+    private Player player;
+    private Player player2;
 
 
     public Board() throws IOException {
@@ -42,10 +39,10 @@ public class Board extends JPanel implements ActionListener {
         image = i.getImage();
 
         setFocusable(true);
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+        setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
 
-        player = new Player(PLAYER1_X, PLAYER_Y, "blastoise");
-        player2 = new Player(PLAYER2_X, PLAYER_Y, "zapdos");
+        player = new Player(PLAYER1_X, settings.getPLAYER_HEIGHT_LIMIT(), "blastoise");
+        player2 = new Player(PLAYER2_X, settings.getPLAYER_HEIGHT_LIMIT(), "zapdos");
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -81,11 +78,11 @@ public class Board extends JPanel implements ActionListener {
 
         healthBar(g2d);
 
-        g2d.drawImage(player.getImage(), player.getX(), player.getY(), PLAYER_WIDTH, PLAYER_HEIGHT,this);
+        g2d.drawImage(player.getImage(), player.getX(), player.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
 
-        g2d.drawImage(player2.getImage(), player2.getX(), player2.getY(), PLAYER_WIDTH, PLAYER_HEIGHT,this);
+        g2d.drawImage(player2.getImage(), player2.getX(), player2.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
 
-        List<SpecialAttack> specialAttacks = player.getSpecialAttack();
+        java.util.List<SpecialAttack> specialAttacks = player.getSpecialAttack();
 
         for (SpecialAttack specialAttack : specialAttacks) {
 
@@ -105,7 +102,7 @@ public class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(font);
-        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        g.drawString(msg, (settings.getGAME_WIDTH() - fm.stringWidth(msg)) / 2, settings.getGAME_HEIGHT() / 2);
         setBackground(Color.black);
         Ui.musicBackground.stop();
     }
@@ -121,7 +118,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void updateSpecialAttack() {
 
-        List<SpecialAttack> specialAttacks = player.getSpecialAttack();
+        java.util.List<SpecialAttack> specialAttacks = player.getSpecialAttack();
 
         for (int i = 0; i < specialAttacks.size(); i++) {
 
@@ -328,27 +325,24 @@ public class Board extends JPanel implements ActionListener {
         timeLabel.setForeground(Color.white);
         add(timeLabel);
 
-        timer = new Timer(500, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeCount--;
-                if (timeCount > 0) {
-                    timeLabel.setText(Integer.toString(timeCount));
+        timer = new Timer(500, e -> {
+            settings.GAME_TIME--;
+            if (settings.getGAME_TIME() > 0) {
+                timeLabel.setText(Integer.toString(settings.getGAME_TIME()));
 
-                } else {
-                    ((Timer) (e.getSource())).stop();
-                    timeLabel.setText("");
-                    ingame = false;
-                }
-                currentTime = timeCount;
+            } else {
+                ((Timer) (e.getSource())).stop();
+                timeLabel.setText("");
+                ingame = false;
             }
+            timeOfLoad = settings.getGAME_TIME();
         });
         timer.setInitialDelay(0);
         timer.start();
     }
 
-    public int getCurrentTime() {
-        return currentTime;
+    public int getTimeOfLoad() {
+        return timeOfLoad;
     }
 
     public void saveGame() {
@@ -360,7 +354,7 @@ public class Board extends JPanel implements ActionListener {
             bw.newLine();
             bw.write("" + player2.getHealth());
             bw.newLine();
-            bw.write("" + getCurrentTime());
+            bw.write("" + getTimeOfLoad());
 
             bw.close();
 
@@ -382,7 +376,7 @@ public class Board extends JPanel implements ActionListener {
                 switch (count) {
                     case 1 -> player.setHealth(Integer.parseInt(line));
                     case 2 -> player2.setHealth(Integer.parseInt(line));
-                    case 3 -> this.timeCount = Integer.parseInt(line);
+                    case 3 -> settings.GAME_TIME = Integer.parseInt(line);
                 }
             }
         } catch (Exception e){

@@ -1,3 +1,6 @@
+package player;
+
+import game.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -10,8 +13,7 @@ public class Player extends Sprite {
 
     private int POSITION_X;
     private int POSITION_Y;
-    private final int BOARD_WIDTH = 650;
-    private final int BOARD_HEIGHT = 250;
+    private final Settings settings = new Settings();
 
     private final Pokemon pokemon;
 
@@ -21,6 +23,7 @@ public class Player extends Sprite {
     private int PLAYER_SIDE = 1;
 
     private List<SpecialAttack> specialAttacks;
+
 
     public Player(int x, int y, String pokemonName) throws IOException {
         super(x, y);
@@ -41,18 +44,18 @@ public class Player extends Sprite {
         getImageDimensions();
     }
 
-    protected void move() {
+    public void move() {
         x += POSITION_X;
-        if (x > BOARD_WIDTH) {
-            x = BOARD_WIDTH;
+        if (x > settings.getPLAYER_WIDTH_LIMIT()) {
+            x = settings.getPLAYER_WIDTH_LIMIT();
         }
         if (x < 0) {
             x = 0;
         }
 
         y += POSITION_Y;
-        if (y > BOARD_HEIGHT) {
-            y = BOARD_HEIGHT;
+        if (y > settings.getPLAYER_HEIGHT_LIMIT()) {
+            y = settings.getPLAYER_HEIGHT_LIMIT();
         }
         if (y < 5) {
             y = 5;
@@ -60,10 +63,10 @@ public class Player extends Sprite {
     }
 
     private boolean canJump(){
-        return y == BOARD_HEIGHT;
+        return y == settings.getPLAYER_HEIGHT_LIMIT();
     }
 
-    protected List<SpecialAttack> getSpecialAttack() {
+    public List<SpecialAttack> getSpecialAttack() {
         return specialAttacks;
     }
 
@@ -91,7 +94,7 @@ public class Player extends Sprite {
         return new Rectangle(x, y, 150, 170);
     }
 
-    protected void keyPressed(KeyEvent e) throws IOException {
+    public void keyPressed(KeyEvent e) throws IOException {
 
         int key = e.getKeyCode();
 
@@ -129,7 +132,7 @@ public class Player extends Sprite {
         }
     }
 
-    protected void keyPressed2(KeyEvent e) throws IOException {
+    public void keyPressed2(KeyEvent e) throws IOException {
 
         int key = e.getKeyCode();
 
@@ -152,7 +155,7 @@ public class Player extends Sprite {
         }
     }
 
-    protected void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
 
@@ -169,7 +172,7 @@ public class Player extends Sprite {
         }
     }
 
-    protected void keyReleased2(KeyEvent e) {
+    public void keyReleased2(KeyEvent e) {
 
         int key = e.getKeyCode();
 

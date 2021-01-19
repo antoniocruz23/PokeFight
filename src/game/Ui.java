@@ -1,3 +1,6 @@
+package game;
+
+import music.Music;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,8 +10,11 @@ import java.io.IOException;
 public class Ui extends JFrame {
 
     private JLabel titleLabel;
-    private JPanel titlePanel, buttonPanel;
-    private JButton startButton, loadButton;
+    private JPanel titlePanel;
+    private JPanel buttonPanel;
+    private JButton startButton;
+    private JButton loadButton;
+    private final Settings settings = new Settings();
 
     static Music musicBackground = new Music("/resources/music/music.midi");
     private final Music buttonSound = new Music("/resources/music/button.wav");
@@ -16,14 +22,13 @@ public class Ui extends JFrame {
     private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 30);
 
-    private String backgroundColor = "#F5A53C";
 
-    public Ui() {
+    public void start() {
         createWindow();
     }
 
     private void createWindow() {
-        setSize(800, 500);
+        setSize(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT());
         setResizable(false);
         setTitle("Poke Fight");
         setLocationRelativeTo(null);
@@ -37,7 +42,7 @@ public class Ui extends JFrame {
 
         titlePanel = new JPanel();
         titlePanel.setBounds(100, 100, 600, 120);
-        titlePanel.setBackground(Color.decode(backgroundColor));
+        titlePanel.setBackground(Color.decode(settings.getUI_BACKGROUND_COLOR()));
 
         titleLabel = new JLabel("POKE FIGHT");
         titleLabel.setForeground(Color.white);
@@ -45,10 +50,10 @@ public class Ui extends JFrame {
 
         buttonPanel = new JPanel();
         buttonPanel.setBounds(300, 300, 200, 60);
-        buttonPanel.setBackground(Color.decode(backgroundColor));
+        buttonPanel.setBackground(Color.decode(settings.getUI_BACKGROUND_COLOR()));
 
         startButton = new JButton("START");
-        startButton.setBackground(Color.decode(backgroundColor));
+        startButton.setBackground(Color.decode(settings.getUI_BACKGROUND_COLOR()));
         startButton.setForeground(Color.white);
         startButton.setFont(normalFont);
         startButton.setOpaque(true);
@@ -56,7 +61,7 @@ public class Ui extends JFrame {
         startButton.addActionListener(startGame);
 
         loadButton = new JButton("LOAD");
-        loadButton.setBackground(Color.decode(backgroundColor));
+        loadButton.setBackground(Color.decode(settings.getUI_BACKGROUND_COLOR()));
         loadButton.setForeground(Color.white);
         loadButton.setFont(normalFont);
         loadButton.setOpaque(true);
@@ -90,18 +95,19 @@ public class Ui extends JFrame {
         setVisible(true);
     }
 
-    TitleScreenHandler startGame = new TitleScreenHandler();
-    private class TitleScreenHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+    ActionListener startGame = new ActionListener() {
+        public void actionPerformed(ActionEvent actionEvent) {
+            titlePanel.setVisible(false);
+            buttonPanel.setVisible(false);
             //buttonSound.play();
+
             try {
-                gameScreen();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+                add(new Board());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-    }
+    };
 
     ActionListener loadGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
@@ -119,11 +125,4 @@ public class Ui extends JFrame {
             add(board);
         }
     };
-
-    private void gameScreen() throws IOException {
-        titlePanel.setVisible(false);
-        buttonPanel.setVisible(false);
-
-        add(new Board());
-    }
 }

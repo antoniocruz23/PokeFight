@@ -1,9 +1,14 @@
+package player;
+
+import game.Settings;
+
 import java.awt.*;
 
 public class SpecialAttack extends Sprite {
 
-    private final int BOARD_WIDTH = 750;
     private final int SPECIAL_ATTACK_SPEED = 3;
+    private Settings settings = new Settings();
+
 
     public SpecialAttack(int x, int y) {
         super(x, y);
@@ -21,7 +26,7 @@ public class SpecialAttack extends Sprite {
     public void moveRight(Player player) {
         x += SPECIAL_ATTACK_SPEED;
 
-        if (x > BOARD_WIDTH) {
+        if (x > settings.getGAME_WIDTH()) {
             setVisible(false);
         }
 
@@ -36,7 +41,7 @@ public class SpecialAttack extends Sprite {
     public void moveLeft() {
         x -= SPECIAL_ATTACK_SPEED;
 
-        if (x > BOARD_WIDTH) {
+        if (x > settings.getGAME_WIDTH()) {
             setVisible(false);
         }
     }
