@@ -27,7 +27,7 @@ For the two players, the currently mapped keys are as following :
 |Move Up | W | Up arrow|
 |Move Left | A | Left arrow|
 |Move Right | D | Right arrow|
-|Special Power | Space | NULL |
+|Special Power | Space | Enter |
 |Save Game | Number 5 | Number 5 |
 |Exit Game | Esc | Esc |
 

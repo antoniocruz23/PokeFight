@@ -23,9 +23,6 @@ public class Board extends JPanel implements ActionListener {
     private Player player1;
     private Player player2;
 
-    private SpecialAttack specialAttack1;
-    private SpecialAttack specialAttack2;
-
 
     public Board() throws IOException {
 
