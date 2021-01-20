@@ -121,6 +121,7 @@ public class Ui extends JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            assert board != null;
             board.loadGame();
             add(board);
         }

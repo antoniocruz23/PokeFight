@@ -62,7 +62,7 @@ public class Settings {
     }
 
     public void setHEALTH_BAR_PLAYER1() {
-        this.HEALTH_BAR_PLAYER2 -= 22;
+        this.HEALTH_BAR_PLAYER1 -= 22;
     }
 
     public int getHEALTH_BAR_PLAYER2() {

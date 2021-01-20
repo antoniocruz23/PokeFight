@@ -42,7 +42,7 @@ public class SpecialAttack extends Sprite {
     }
 
     public Rectangle getRect() {
-        return new Rectangle(x, y, 90, 85);
+        return new Rectangle(x + 10, y + 30, 70, 40);
     }
 
     public void intersects(Player player) {

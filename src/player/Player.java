@@ -92,7 +92,7 @@ public class Player extends Sprite {
     }
 
     public Rectangle getRect() {
-        return new Rectangle(x, y, 150, 170);
+        return new Rectangle(x + 50, y + 30, 100, 130);
     }
 
     public void keyPressed(KeyEvent e) throws IOException {
@@ -124,13 +124,13 @@ public class Player extends Sprite {
         }
 
         if (key == KeyEvent.VK_ESCAPE) {
-
-            new Ui().start();
+            System.exit(0);
             return;
         }
 
         if (key == KeyEvent.VK_5) {
             new Board().saveGame();
+            return;
         }
 
         /* PLAYER 2 CONTROLLER */

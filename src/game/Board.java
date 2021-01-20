@@ -20,8 +20,11 @@ public class Board extends JPanel implements ActionListener {
     private final Font timeFont = new Font("Times New Roman", Font.BOLD, 35);
     private final Settings settings = new Settings();
 
-    private Player player;
+    private Player player1;
     private Player player2;
+
+    private SpecialAttack specialAttack1;
+    private SpecialAttack specialAttack2;
 
 
     public Board() throws IOException {
@@ -38,7 +41,7 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
 
-        player = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
+        player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
         player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
 
         timer = new Timer(DELAY, this);
@@ -59,7 +62,7 @@ public class Board extends JPanel implements ActionListener {
 
             drawObjects(g);
 
-        } if (settings.getGAME_TIME() == 0 || player.getHealth() <= 0 || player2.getHealth() <= 0) {
+        } if (settings.getGAME_TIME() == 0 || player1.getHealth() <= 0 || player2.getHealth() <= 0) {
 
             drawGameOver(g);
         }
@@ -75,20 +78,26 @@ public class Board extends JPanel implements ActionListener {
 
         healthBar(g2d);
 
-        g2d.drawImage(player.getImage(), player.getX(), player.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
+        g2d.drawImage(player1.getImage(), player1.getX(), player1.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
 
         g2d.drawImage(player2.getImage(), player2.getX(), player2.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
 
-        java.util.List<SpecialAttack> specialAttacks = player.getSpecialAttack();
+        java.util.List<SpecialAttack> specialAttacks = player1.getSpecialAttack();
+        java.util.List<SpecialAttack> specialAttacks2 = player2.getSpecialAttack();
 
         for (SpecialAttack specialAttack : specialAttacks) {
 
             g2d.drawImage(specialAttack.getImage(), specialAttack.getX(), specialAttack.getY(), this);
-            //g2d.drawRect(specialAttack.getX(), specialAttack.getY(), 90, 85);
+            g2d.drawRect(specialAttack.getX() + 10, specialAttack.getY() + 30, 70, 40);
+        }
+        for (SpecialAttack specialAttack2 : specialAttacks2) {
+
+            g2d.drawImage(specialAttack2.getImage(), specialAttack2.getX(), specialAttack2.getY(), this);
+            g2d.drawRect(specialAttack2.getX() + 10, specialAttack2.getY() + 30, 70, 40);
         }
 
-        //g.drawRect(player.getX(), player.getY(), 150, 170);
-        //g.drawRect(player2.getX(), player2.getY(), 150, 170);
+        g.drawRect(player1.getX() + 50, player1.getY() + 30, 100, 130);
+        g.drawRect(player2.getX() + 50, player2.getY() + 30, 100, 130);
     }
 
     private void drawGameOver(Graphics g) {
@@ -101,12 +110,12 @@ public class Board extends JPanel implements ActionListener {
         timeLabel.setVisible(false);
         Ui.musicBackground.stop();
 
-        if(player.getHealth() <= 0){
+        if(player1.getHealth() <= 0){
             msg = player2.getPokemon().getPokeName().toUpperCase() + " WIN!!";
 
         }
         else if(player2.getHealth() <= 0){
-            msg = player.getPokemon().getPokeName().toUpperCase() + " WIN!!";
+            msg = player1.getPokemon().getPokeName().toUpperCase() + " WIN!!";
 
         } else {
             msg = "Game Over";
@@ -120,15 +129,16 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        updateSpecialAttack();
+        updateSpecialAttack(player1, player2);
+        updateSpecialAttack(player2, player1);
         updatePlayer();
 
         repaint();
     }
 
-    private void updateSpecialAttack() {
+    private void updateSpecialAttack(Player playerAttack, Player playerDamage) {
 
-        java.util.List<SpecialAttack> specialAttacks = player.getSpecialAttack();
+        java.util.List<SpecialAttack> specialAttacks = playerAttack.getSpecialAttack();
 
         for (int i = 0; i < specialAttacks.size(); i++) {
 
@@ -136,7 +146,7 @@ public class Board extends JPanel implements ActionListener {
 
             if (specialAttack.isVisible()) {
 
-                specialAttack.moveRight(player2);
+                specialAttack.moveRight(playerDamage);
 
                 if(!specialAttack.isVisible()) {
                     specialAttacks.remove(i);
@@ -151,7 +161,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void updatePlayer() {
 
-        player.move();
+        player1.move();
         player2.move();
     }
 
@@ -164,7 +174,7 @@ public class Board extends JPanel implements ActionListener {
                 case KeyEvent.VK_SPACE, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W,
                         KeyEvent.VK_ESCAPE, KeyEvent.VK_5 -> {
                     try {
-                        player.keyPressed(e);
+                        player1.keyPressed(e);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -185,22 +195,22 @@ public class Board extends JPanel implements ActionListener {
 
             switch (e.getKeyCode()){
                 case KeyEvent.VK_SPACE:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_A:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_D:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_W:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_ESCAPE:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_5:
-                    player.keyReleased(e);
+                    player1.keyReleased(e);
 
                 case KeyEvent.VK_LEFT:
                     player2.keyReleased(e);
@@ -223,9 +233,9 @@ public class Board extends JPanel implements ActionListener {
         g2d.fillRect(40, 27, settings.getHEALTH_BAR_PLAYER1(), 15);
         g2d.fillRect(500, 27, settings.getHEALTH_BAR_PLAYER2(),15);
 
-        if(player.isIntersected()){
+        if(player1.isIntersected()){
             settings.setHEALTH_BAR_PLAYER1();
-            player.setIntersected(false);
+            player1.setIntersected(false);
         }
 
         if(player2.isIntersected()){
@@ -240,7 +250,7 @@ public class Board extends JPanel implements ActionListener {
         timeLabel.setForeground(Color.white);
         add(timeLabel);
 
-        timer = new Timer(500, e -> {
+        timer = new Timer(1000, e -> {
             settings.GAME_TIME--;
             if (settings.getGAME_TIME() > 0) {
                 timeLabel.setText(Integer.toString(settings.getGAME_TIME()));
@@ -265,7 +275,7 @@ public class Board extends JPanel implements ActionListener {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter("gameSave.txt"));
 
-            bw.write("" + player.getHealth());
+            bw.write("" + player1.getHealth());
             bw.newLine();
             bw.write("" + player2.getHealth());
             bw.newLine();
@@ -289,7 +299,7 @@ public class Board extends JPanel implements ActionListener {
 
                 count++;
                 switch (count) {
-                    case 1 -> player.setHealth(Integer.parseInt(line));
+                    case 1 -> player1.setHealth(Integer.parseInt(line));
                     case 2 -> player2.setHealth(Integer.parseInt(line));
                     case 3 -> settings.GAME_TIME = Integer.parseInt(line);
                 }
