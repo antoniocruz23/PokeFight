@@ -2,7 +2,10 @@ package game;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import player.*;
 import player.SpecialAttack;
@@ -13,7 +16,7 @@ public class Board extends JPanel implements ActionListener {
     private final int DELAY = 15;
 
     private Timer timer;
-    private Image image;
+    private BufferedImage image;
     private JLabel timeLabel;
 
     private int timeOfLoad = 500;
@@ -23,8 +26,19 @@ public class Board extends JPanel implements ActionListener {
     private Player player1;
     private Player player2;
 
+    private String namepokemon1;
+    private String namepokemon2;
+
 
     public Board() throws IOException {
+        /*
+        namepokemon1 = JOptionPane.showInputDialog("Name of Player 1 Pokemon").toLowerCase();
+        settings.setPLAYER1_POKEMON(namepokemon1);
+
+        namepokemon2 = JOptionPane.showInputDialog("Name of Player 2 Pokemon").toLowerCase();
+        settings.setPLAYER2_POKEMON(namepokemon2);
+         */
+
 
         initBoard();
     }
@@ -32,8 +46,8 @@ public class Board extends JPanel implements ActionListener {
     private void initBoard() throws IOException {
 
         addKeyListener(new TAdapter());
-        ImageIcon i = new ImageIcon("resources/images/battle.jpeg");
-        image = i.getImage();
+
+        backgroundImage("resources/images/battle.jpeg");
 
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
@@ -308,5 +322,23 @@ public class Board extends JPanel implements ActionListener {
 
     public void setIngame(boolean ingame) {
         this.ingame = ingame;
+    }
+
+    private void backgroundImage(String source){
+
+        try {
+
+            URL url = getClass().getResource(source.startsWith("/") ? source : "/" + source);
+            if (url != null) {
+                this.image = ImageIO.read(url.openStream());
+
+            } else {
+
+                image = ImageIO.read(new File(source));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -2,8 +2,8 @@ package game;
 
 public class Settings {
 
-    private final String PLAYER1_POKEMON = "blastoise";
-    private final String PLAYER2_POKEMON = "zapdos";
+    private String PLAYER1_POKEMON = "blastoise";
+    private String PLAYER2_POKEMON = "zapdos";
 
     private final int GAME_WIDTH = 800;
     private final int GAME_HEIGHT = 500;
@@ -91,5 +91,13 @@ public class Settings {
 
     public String getPLAYER2_POKEMON() {
         return PLAYER2_POKEMON;
+    }
+
+    public void setPLAYER1_POKEMON(String PLAYER1_POKEMON) {
+        this.PLAYER1_POKEMON = PLAYER1_POKEMON;
+    }
+
+    public void setPLAYER2_POKEMON(String PLAYER2_POKEMON) {
+        this.PLAYER2_POKEMON = PLAYER2_POKEMON;
     }
 }
