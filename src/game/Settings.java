@@ -6,10 +6,12 @@ public class Settings {
     private String PLAYER2_POKEMON;
     private String PLAYER1_DEFAULT = "blastoise";
     private String PLAYER2_DEFAULT = "zapdos";
+    private int PLAYER1_HEALTH = 250;
+    private int PLAYER2_HEALTH = 250;
 
     private final int GAME_WIDTH = 800;
     private final int GAME_HEIGHT = 500;
-    public int GAME_TIME = 300;
+    public int GAME_TIME = 150;
 
     private final int PLAYER_D_WIDTH = 200;
     private final int PLAYER_D_HEIGHT = 200;
@@ -117,5 +119,21 @@ public class Settings {
 
     public String getPLAYER2_DEFAULT() {
         return PLAYER2_DEFAULT;
+    }
+
+    public int getPLAYER1_HEALTH() {
+        return PLAYER1_HEALTH;
+    }
+
+    public int getPLAYER2_HEALTH() {
+        return PLAYER2_HEALTH;
+    }
+
+    public void setPLAYER1_HEALTH(int PLAYER1_HEALTH) {
+        this.PLAYER1_HEALTH = PLAYER1_HEALTH;
+    }
+
+    public void setPLAYER2_HEALTH(int PLAYER2_HEALTH) {
+        this.PLAYER2_HEALTH = PLAYER2_HEALTH;
     }
 }

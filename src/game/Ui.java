@@ -1,8 +1,6 @@
 package game;
 
 import music.Music;
-import player.Player;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,8 +35,8 @@ public class Ui extends JFrame {
         setTitle("Poke Fight");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //musicBackground.play();
-        //musicBackground.setLoop(10);
+        musicBackground.play();
+        musicBackground.setLoop(10);
         createUI();
     }
 
@@ -117,9 +115,8 @@ public class Ui extends JFrame {
 
     ActionListener startGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
-            addPokeName();
             setVisibleFalse();
-            //buttonSound.play();
+            buttonSound.play();
 
             try {
                 add(new Board());
@@ -133,16 +130,14 @@ public class Ui extends JFrame {
     ActionListener loadGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
             setVisibleFalse();
-            //buttonSound.play();
+            buttonSound.play();
 
             Board board = null;
             try {
-                board = new Board();
+                board = new Board("");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            assert board != null;
-            board.loadGame();
             add(board);
         }
     };
@@ -152,10 +147,5 @@ public class Ui extends JFrame {
         buttonPanel.setVisible(false);
         P1_POKE_NAME.setVisible(false);
         P2_POKE_NAME.setVisible(false);
-    }
-
-    private void addPokeName(){
-        settings.setPLAYER1_POKEMON(P1_POKE_NAME.getText().toLowerCase());
-        settings.setPLAYER2_POKEMON(P2_POKE_NAME.getText().toLowerCase());
     }
 }

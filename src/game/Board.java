@@ -27,8 +27,12 @@ public class Board extends JPanel implements ActionListener {
 
 
     public Board() throws IOException {
-
         addPokeName();
+        initBoard();
+    }
+
+    public Board(String load) throws IOException {
+        loadGame();
         initBoard();
     }
 
@@ -37,17 +41,10 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
 
         backgroundImage();
-
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
 
-        try {
-            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
-            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
-        } catch (IOException e) {
-            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_DEFAULT());
-            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_DEFAULT());
-        }
+        createPlayers();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -187,9 +184,7 @@ public class Board extends JPanel implements ActionListener {
                         ioException.printStackTrace();
                     }
                 }
-                case KeyEvent.VK_5 -> {
-                    saveGame();
-                }
+                case KeyEvent.VK_5 -> saveGame();
 
                 case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_ENTER -> {
                     try {
@@ -277,7 +272,6 @@ public class Board extends JPanel implements ActionListener {
 
     public void saveGame() {
         try{
-
             BufferedWriter bw = new BufferedWriter(new FileWriter("gameSave.txt"));
 
             bw.write("" + settings.getPLAYER1_POKEMON());
@@ -315,11 +309,11 @@ public class Board extends JPanel implements ActionListener {
                         settings.setPLAYER2_POKEMON(line);
                     }
                     case 3 -> {
-                        player1.setHealth(Integer.parseInt(line));
+                        settings.setPLAYER1_HEALTH(Integer.parseInt(line));
                         settings.setHEALTH_BAR_P1_LOAD(Integer.parseInt(line));
                     }
                     case 4 -> {
-                        player2.setHealth(Integer.parseInt(line));
+                        settings.setPLAYER2_HEALTH(Integer.parseInt(line));
                         settings.setHEALTH_BAR_P2_LOAD(Integer.parseInt(line));
                     }
                     case 5 -> settings.GAME_TIME = Integer.parseInt(line);
@@ -334,7 +328,7 @@ public class Board extends JPanel implements ActionListener {
         this.ingame = ingame;
     }
 
-    private void backgroundImage(){
+    private void backgroundImage() {
 
         try {
             URL url = new URL("https://raw.githubusercontent.com/antoniocruz23/PokeFight/main/resources/images/battle.jpeg");
@@ -345,8 +339,22 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    private void addPokeName(){
+    private void addPokeName() {
         settings.setPLAYER1_POKEMON(Ui.getP1_POKE_NAME().toLowerCase());
         settings.setPLAYER2_POKEMON(Ui.getP2_POKE_NAME().toLowerCase());
+    }
+
+    private void createPlayers() throws IOException {
+
+        try {
+            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
+            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
+        } catch (IOException e) {
+            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_DEFAULT());
+            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_DEFAULT());
+        }
+
+        player1.setHealth(settings.getPLAYER1_HEALTH());
+        player2.setHealth(settings.getPLAYER2_HEALTH());
     }
 }
