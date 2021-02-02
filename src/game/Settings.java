@@ -7,7 +7,7 @@ public class Settings {
 
     private final int GAME_WIDTH = 800;
     private final int GAME_HEIGHT = 500;
-    protected int GAME_TIME = 300;
+    public int GAME_TIME = 300;
 
     private final int PLAYER_D_WIDTH = 200;
     private final int PLAYER_D_HEIGHT = 200;
@@ -21,7 +21,7 @@ public class Settings {
     private int HEALTH_BAR_PLAYER1 = 250;
     private int HEALTH_BAR_PLAYER2 = 250;
 
-    private int SPECIAL_ATTACK_DAMAGE = 10;
+    private int SPECIAL_ATTACK_DAMAGE = 20;
 
     private final String UI_BACKGROUND_COLOR = "#F5A53C";
 
@@ -62,7 +62,7 @@ public class Settings {
     }
 
     public void setHEALTH_BAR_PLAYER1() {
-        this.HEALTH_BAR_PLAYER1 -= 22;
+        this.HEALTH_BAR_PLAYER1 -= getSPECIAL_ATTACK_DAMAGE();
     }
 
     public int getHEALTH_BAR_PLAYER2() {
@@ -70,7 +70,7 @@ public class Settings {
     }
 
     public void setHEALTH_BAR_PLAYER2() {
-        this.HEALTH_BAR_PLAYER2 -= 22;
+        this.HEALTH_BAR_PLAYER2 -= getSPECIAL_ATTACK_DAMAGE();
     }
 
     public int getSPECIAL_ATTACK_DAMAGE() {
@@ -99,5 +99,13 @@ public class Settings {
 
     public void setPLAYER2_POKEMON(String PLAYER2_POKEMON) {
         this.PLAYER2_POKEMON = PLAYER2_POKEMON;
+    }
+
+    public void setHEALTH_BAR_P1_LOAD(int health){
+        this.HEALTH_BAR_PLAYER1 = health;
+    }
+
+    public void setHEALTH_BAR_P2_LOAD(int health){
+        this.HEALTH_BAR_PLAYER2 = health;
     }
 }

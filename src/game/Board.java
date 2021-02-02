@@ -47,7 +47,7 @@ public class Board extends JPanel implements ActionListener {
 
         addKeyListener(new TAdapter());
 
-        backgroundImage("resources/images/battle.jpeg");
+        backgroundImage();
 
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
@@ -90,7 +90,6 @@ public class Board extends JPanel implements ActionListener {
         healthBar(g2d);
 
         g2d.drawImage(player1.getImage(), player1.getX(), player1.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
-
         g2d.drawImage(player2.getImage(), player2.getX(), player2.getY(), settings.getPLAYER_D_WIDTH(), settings.getPLAYER_D_HEIGHT(),this);
 
         java.util.List<SpecialAttack> specialAttacks = player1.getSpecialAttack();
@@ -99,16 +98,16 @@ public class Board extends JPanel implements ActionListener {
         for (SpecialAttack specialAttack : specialAttacks) {
 
             g2d.drawImage(specialAttack.getImage(), specialAttack.getX(), specialAttack.getY(), this);
-            g2d.drawRect(specialAttack.getX() + 10, specialAttack.getY() + 30, 70, 40);
+//            g2d.drawRect(specialAttack.getX() + 10, specialAttack.getY() + 30, 70, 40);
         }
         for (SpecialAttack specialAttack2 : specialAttacks2) {
 
             g2d.drawImage(specialAttack2.getImage(), specialAttack2.getX(), specialAttack2.getY(), this);
-            g2d.drawRect(specialAttack2.getX() + 10, specialAttack2.getY() + 30, 70, 40);
+//            g2d.drawRect(specialAttack2.getX() + 10, specialAttack2.getY() + 30, 70, 40);
         }
 
-        g.drawRect(player1.getX() + 50, player1.getY() + 30, 100, 130);
-        g.drawRect(player2.getX() + 50, player2.getY() + 30, 100, 130);
+//        g.drawRect(player1.getX() + 50, player1.getY() + 30, 100, 130);
+//        g.drawRect(player2.getX() + 50, player2.getY() + 30, 100, 130);
     }
 
     private void drawGameOver(Graphics g) {
@@ -156,8 +155,12 @@ public class Board extends JPanel implements ActionListener {
             SpecialAttack specialAttack = specialAttacks.get(i);
 
             if (specialAttack.isVisible()) {
+                if(playerDamage == player2) {
+                    specialAttack.moveRight(playerDamage);
 
-                specialAttack.moveRight(playerDamage);
+                } else {
+                    specialAttack.moveLeft(playerDamage);
+                }
 
                 if(!specialAttack.isVisible()) {
                     specialAttacks.remove(i);
@@ -183,12 +186,15 @@ public class Board extends JPanel implements ActionListener {
 
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_W,
-                        KeyEvent.VK_ESCAPE, KeyEvent.VK_5 -> {
+                        KeyEvent.VK_ESCAPE -> {
                     try {
                         player1.keyPressed(e);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
+                }
+                case KeyEvent.VK_5 -> {
+                    saveGame();
                 }
 
                 case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_ENTER -> {
@@ -265,7 +271,6 @@ public class Board extends JPanel implements ActionListener {
             settings.GAME_TIME--;
             if (settings.getGAME_TIME() > 0) {
                 timeLabel.setText(Integer.toString(settings.getGAME_TIME()));
-
             } else {
                 ((Timer) (e.getSource())).stop();
                 timeLabel.setText("");
@@ -277,10 +282,6 @@ public class Board extends JPanel implements ActionListener {
         timer.start();
     }
 
-    public int getTimeOfLoad() {
-        return timeOfLoad;
-    }
-
     public void saveGame() {
         try{
 
@@ -290,7 +291,7 @@ public class Board extends JPanel implements ActionListener {
             bw.newLine();
             bw.write("" + player2.getHealth());
             bw.newLine();
-            bw.write("" + getTimeOfLoad());
+            bw.write("" + settings.getGAME_TIME());
 
             bw.close();
 
@@ -306,12 +307,18 @@ public class Board extends JPanel implements ActionListener {
             String line;
             int count = 0;
 
-            while ((line =  br.readLine()) != null){
+            while ((line = br.readLine()) != null){
 
                 count++;
                 switch (count) {
-                    case 1 -> player1.setHealth(Integer.parseInt(line));
-                    case 2 -> player2.setHealth(Integer.parseInt(line));
+                    case 1 -> {
+                        player1.setHealth(Integer.parseInt(line));
+                        settings.setHEALTH_BAR_P1_LOAD(Integer.parseInt(line));
+                    }
+                    case 2 -> {
+                        player2.setHealth(Integer.parseInt(line));
+                        settings.setHEALTH_BAR_P2_LOAD(Integer.parseInt(line));
+                    }
                     case 3 -> settings.GAME_TIME = Integer.parseInt(line);
                 }
             }
@@ -324,18 +331,11 @@ public class Board extends JPanel implements ActionListener {
         this.ingame = ingame;
     }
 
-    private void backgroundImage(String source){
+    private void backgroundImage(){
 
         try {
-
-            URL url = getClass().getResource(source.startsWith("/") ? source : "/" + source);
-            if (url != null) {
-                this.image = ImageIO.read(url.openStream());
-
-            } else {
-
-                image = ImageIO.read(new File(source));
-            }
+            URL url = new URL("https://raw.githubusercontent.com/antoniocruz23/PokeFight/main/resources/images/battle.jpeg");
+            image = ImageIO.read(url);
 
         } catch (Exception ex) {
             ex.printStackTrace();

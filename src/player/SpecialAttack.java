@@ -8,17 +8,20 @@ public class SpecialAttack extends Sprite {
 
     private final int SPECIAL_ATTACK_SPEED = 3;
     private Settings settings = new Settings();
+    private String attackSprite;
 
 
-    public SpecialAttack(int x, int y) {
+    public SpecialAttack(int x, int y, String attackSprite) {
         super(x, y);
+
+        this.attackSprite = attackSprite;
 
         initSpecialAttack();
     }
 
     private void initSpecialAttack() {
 
-        specialAttackImage("resources/images/blue-fireball.gif");
+        specialAttackImage(attackSprite);
         getImageDimensions();
         getRect();
     }
@@ -33,12 +36,14 @@ public class SpecialAttack extends Sprite {
         intersects(player);
     }
 
-    public void moveLeft() {
+    public void moveLeft(Player player) {
         x -= SPECIAL_ATTACK_SPEED;
 
-        if (x > settings.getGAME_WIDTH()) {
+        if (x < 0) {
             setVisible(false);
         }
+
+        intersects(player);
     }
 
     public Rectangle getRect() {
@@ -48,12 +53,12 @@ public class SpecialAttack extends Sprite {
     public void intersects(Player player) {
 
         if(getRect().intersects(player.getRect())){
-            System.out.println("touch-----------------------" + x);
+//            System.out.println("touch-----------------------" + x);
 
             player.setIntersected(true);
-            player.setDamage();
+            player.getDamage();
             setVisible(false);
         }
-        System.out.println(x + " SPECIAL ATTACK");
+//        System.out.println(x + " SPECIAL ATTACK");
     }
 }

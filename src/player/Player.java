@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Player extends Sprite {
 
-    private int health = 100;
+    private int health = 250;
 
     private int POSITION_X;
     private int POSITION_Y;
@@ -71,8 +71,8 @@ public class Player extends Sprite {
         return specialAttacks;
     }
 
-    public void specialAttack() {
-        specialAttacks.add(new SpecialAttack(x + width, y + height / 2));
+    public void specialAttack(String attackSprite) {
+        specialAttacks.add(new SpecialAttack(x + width, y + height / 2, attackSprite));
     }
 
     public int getPLAYER_SIDE() {
@@ -87,7 +87,7 @@ public class Player extends Sprite {
         this.health = health;
     }
 
-    public void setDamage() {
+    public void getDamage() {
         this.health -= settings.getSPECIAL_ATTACK_DAMAGE();
     }
 
@@ -99,8 +99,8 @@ public class Player extends Sprite {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_SPACE) {
-            specialAttack();
+        if (key == KeyEvent.VK_SPACE && getPLAYER_SIDE() == 1) {
+            specialAttack("resources/images/blue-fireball-p1.gif");
             return;
         }
 
@@ -129,11 +129,15 @@ public class Player extends Sprite {
         }
 
         if (key == KeyEvent.VK_5) {
-            new Board().saveGame();
             return;
         }
 
         /* PLAYER 2 CONTROLLER */
+
+        if (key == KeyEvent.VK_ENTER && getPLAYER_SIDE() == 0) {
+            specialAttack("resources/images/blue-fireball-p2.gif");
+            return;
+        }
 
         if (key == KeyEvent.VK_LEFT) {
             POSITION_X = -3;
@@ -151,11 +155,6 @@ public class Player extends Sprite {
 
         if (key == KeyEvent.VK_UP && canJump()) {
             POSITION_Y = -5;
-            return;
-        }
-
-        if (key == KeyEvent.VK_ENTER) {
-            specialAttack();
         }
     }
 

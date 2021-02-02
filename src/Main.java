@@ -1,14 +1,9 @@
 import game.Ui;
-import player.Pokemon;
-import java.net.MalformedURLException;
 
 public class Main {
 
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) {
         Ui ui = new Ui();
         ui.start();
-
-        Pokemon pokemon = new Pokemon("chrizard");
-        pokemon.get();
     }
 }

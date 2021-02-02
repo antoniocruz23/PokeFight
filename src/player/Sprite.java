@@ -23,18 +23,18 @@ public class Sprite {
         visible = true;
     }
 
-    protected void loadImage(String imageName) throws IOException {
+    public void loadImage(String imageName) throws IOException {
 
         URL url = new URL(imageName);
         image = ImageIO.read(url);
     }
 
-    protected void specialAttackImage(String specialAttackImage) {
+    public void specialAttackImage(String specialAttackImage) {
         ImageIcon ii = new ImageIcon(specialAttackImage);
         image = ii.getImage();
     }
 
-    protected void getImageDimensions() {
+    public void getImageDimensions() {
 
         width = image.getWidth(null);
         height = image.getHeight(null);
