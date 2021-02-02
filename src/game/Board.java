@@ -280,6 +280,10 @@ public class Board extends JPanel implements ActionListener {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter("gameSave.txt"));
 
+            bw.write("" + settings.getPLAYER1_POKEMON());
+            bw.newLine();
+            bw.write("" + settings.getPLAYER2_POKEMON());
+            bw.newLine();
             bw.write("" + player1.getHealth());
             bw.newLine();
             bw.write("" + player2.getHealth());
@@ -305,14 +309,20 @@ public class Board extends JPanel implements ActionListener {
                 count++;
                 switch (count) {
                     case 1 -> {
+                        settings.setPLAYER1_POKEMON(line);
+                    }
+                    case 2 -> {
+                        settings.setPLAYER2_POKEMON(line);
+                    }
+                    case 3 -> {
                         player1.setHealth(Integer.parseInt(line));
                         settings.setHEALTH_BAR_P1_LOAD(Integer.parseInt(line));
                     }
-                    case 2 -> {
+                    case 4 -> {
                         player2.setHealth(Integer.parseInt(line));
                         settings.setHEALTH_BAR_P2_LOAD(Integer.parseInt(line));
                     }
-                    case 3 -> settings.GAME_TIME = Integer.parseInt(line);
+                    case 5 -> settings.GAME_TIME = Integer.parseInt(line);
                 }
             }
         } catch (Exception e){
