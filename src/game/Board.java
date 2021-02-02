@@ -19,27 +19,16 @@ public class Board extends JPanel implements ActionListener {
     private BufferedImage image;
     private JLabel timeLabel;
 
-    private int timeOfLoad = 500;
     private final Font timeFont = new Font("Times New Roman", Font.BOLD, 35);
     private final Settings settings = new Settings();
 
     private Player player1;
     private Player player2;
 
-    private String namepokemon1;
-    private String namepokemon2;
-
 
     public Board() throws IOException {
-        /*
-        namepokemon1 = JOptionPane.showInputDialog("Name of Player 1 Pokemon").toLowerCase();
-        settings.setPLAYER1_POKEMON(namepokemon1);
 
-        namepokemon2 = JOptionPane.showInputDialog("Name of Player 2 Pokemon").toLowerCase();
-        settings.setPLAYER2_POKEMON(namepokemon2);
-         */
-
-
+        addPokeName();
         initBoard();
     }
 
@@ -52,8 +41,13 @@ public class Board extends JPanel implements ActionListener {
         setFocusable(true);
         setPreferredSize(new Dimension(settings.getGAME_WIDTH(), settings.getGAME_HEIGHT()));
 
-        player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
-        player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
+        try {
+            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_POKEMON());
+            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_POKEMON());
+        } catch (IOException e) {
+            player1 = new Player(settings.getPLAYER1_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER1_DEFAULT());
+            player2 = new Player(settings.getPLAYER2_INIT_X(), settings.getPLAYER_HEIGHT_LIMIT(), settings.getPLAYER2_DEFAULT());
+        }
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -276,7 +270,6 @@ public class Board extends JPanel implements ActionListener {
                 timeLabel.setText("");
                 ingame = false;
             }
-            timeOfLoad = settings.getGAME_TIME();
         });
         timer.setInitialDelay(0);
         timer.start();
@@ -340,5 +333,10 @@ public class Board extends JPanel implements ActionListener {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void addPokeName(){
+        settings.setPLAYER1_POKEMON(Ui.getP1_POKE_NAME().toLowerCase());
+        settings.setPLAYER2_POKEMON(Ui.getP2_POKE_NAME().toLowerCase());
     }
 }

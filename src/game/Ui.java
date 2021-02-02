@@ -1,6 +1,8 @@
 package game;
 
 import music.Music;
+import player.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,8 @@ public class Ui extends JFrame {
     private JPanel buttonPanel;
     private JButton startButton;
     private JButton loadButton;
+    private static JTextField P1_POKE_NAME;
+    private static JTextField P2_POKE_NAME;
     private final Settings settings = new Settings();
 
     static Music musicBackground = new Music("/resources/music/music.midi");
@@ -84,25 +88,42 @@ public class Ui extends JFrame {
         gbcLoad.weighty = 1;
         gbcLoad.anchor = GridBagConstraints.NORTHWEST;
 
+        P1_POKE_NAME = new JTextField("Enter Pokemon Name - P1");
+        P1_POKE_NAME.setBounds(180,330,200,30);
+
+        P2_POKE_NAME = new JTextField("Enter Pokemon Name - P2");
+        P2_POKE_NAME.setBounds(450,330,200,30);
+
         titlePanel.add(titleLabel);
         buttonPanel.setLayout(new GridBagLayout());
         buttonPanel.add(startButton, gbcStart);
         buttonPanel.add(loadButton, gbcLoad);
 
+        add(P1_POKE_NAME);
+        add(P2_POKE_NAME);
         add(titlePanel);
         add(buttonPanel);
 
         setVisible(true);
     }
 
+    public static String getP1_POKE_NAME() {
+        return P1_POKE_NAME.getText();
+    }
+
+    public static String getP2_POKE_NAME() {
+        return P2_POKE_NAME.getText();
+    }
+
     ActionListener startGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
-            titlePanel.setVisible(false);
-            buttonPanel.setVisible(false);
+            addPokeName();
+            setVisibleFalse();
             //buttonSound.play();
 
             try {
                 add(new Board());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -111,8 +132,7 @@ public class Ui extends JFrame {
 
     ActionListener loadGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
-            titlePanel.setVisible(false);
-            buttonPanel.setVisible(false);
+            setVisibleFalse();
             //buttonSound.play();
 
             Board board = null;
@@ -126,4 +146,16 @@ public class Ui extends JFrame {
             add(board);
         }
     };
+
+    private void setVisibleFalse(){
+        titlePanel.setVisible(false);
+        buttonPanel.setVisible(false);
+        P1_POKE_NAME.setVisible(false);
+        P2_POKE_NAME.setVisible(false);
+    }
+
+    private void addPokeName(){
+        settings.setPLAYER1_POKEMON(P1_POKE_NAME.getText().toLowerCase());
+        settings.setPLAYER2_POKEMON(P2_POKE_NAME.getText().toLowerCase());
+    }
 }

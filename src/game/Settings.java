@@ -2,8 +2,10 @@ package game;
 
 public class Settings {
 
-    private String PLAYER1_POKEMON = "blastoise";
-    private String PLAYER2_POKEMON = "zapdos";
+    private String PLAYER1_POKEMON;
+    private String PLAYER2_POKEMON;
+    private String PLAYER1_DEFAULT = "blastoise";
+    private String PLAYER2_DEFAULT = "zapdos";
 
     private final int GAME_WIDTH = 800;
     private final int GAME_HEIGHT = 500;
@@ -107,5 +109,13 @@ public class Settings {
 
     public void setHEALTH_BAR_P2_LOAD(int health){
         this.HEALTH_BAR_PLAYER2 = health;
+    }
+
+    public String getPLAYER1_DEFAULT() {
+        return PLAYER1_DEFAULT;
+    }
+
+    public String getPLAYER2_DEFAULT() {
+        return PLAYER2_DEFAULT;
     }
 }
