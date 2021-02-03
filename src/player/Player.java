@@ -72,7 +72,7 @@ public class Player extends Sprite {
     }
 
     public void specialAttack(String attackSprite) {
-        specialAttacks.add(new SpecialAttack(x + width, y + height / 2, attackSprite));
+        specialAttacks.add(new SpecialAttack(x + getWidth(), y + getHeight() / 2, attackSprite));
     }
 
     public int getPLAYER_SIDE() {

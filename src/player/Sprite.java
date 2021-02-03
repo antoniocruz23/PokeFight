@@ -10,10 +10,10 @@ public class Sprite {
 
     protected int x;
     protected int y;
-    protected int width;
-    protected int height;
-    protected boolean visible;
-    protected Image image;
+    private int width;
+    private int height;
+    private boolean visible;
+    private Image image;
 
 
     public Sprite(int x, int y) {

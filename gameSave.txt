@@ -1,5 +1,5 @@
-torterra
-infernape
-170
-90
-290
+charmander
+squirtle
+230
+230
+29
