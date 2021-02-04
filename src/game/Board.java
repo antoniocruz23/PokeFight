@@ -26,13 +26,16 @@ public class Board extends JPanel implements ActionListener {
     private Player player2;
 
 
-    public Board() throws IOException {
-        addPokeName();
-        initBoard();
+    public Board(String option) throws IOException {
+        chooseGameStart(option);
     }
 
-    public Board(String load) throws IOException {
-        loadGame();
+    private void chooseGameStart(String option) throws IOException {
+        if(option.equals("loadGame")) {
+            loadGame();
+        } else {
+            addPokeName();
+        }
         initBoard();
     }
 

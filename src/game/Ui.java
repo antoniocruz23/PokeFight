@@ -119,7 +119,7 @@ public class Ui extends JFrame {
             buttonSound.play();
 
             try {
-                add(new Board());
+                add(new Board("newGame"));
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -134,7 +134,7 @@ public class Ui extends JFrame {
 
             Board board = null;
             try {
-                board = new Board("");
+                board = new Board("loadGame");
             } catch (IOException e) {
                 e.printStackTrace();
             }
