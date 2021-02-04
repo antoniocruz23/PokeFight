@@ -8,9 +8,9 @@ There are currently 2 default Pokémons for the game,
 |:---:|:----:|
 |![Blastoise](https://i.imgur.com/aWfVxFR.png) | ![Zapdos](https://i.imgur.com/pP9Rp2b.png) |
 
-but you can choose your own Pokémon!! You just need to access this <a href="https://www.pokemon.com/us/pokedex/" target="_blank">website</a> and choose the name of the Pokémon you want! It's pretty simple.
+but you can choose your own Pokémon!! You just need to access this <a href="https://www.pokemon.com/us/pokedex/" target="_blank">website</a> and choose the name of the Pokémon you want! It's pretty simple!
 
-The game will go on until either player gets his health to zero.
+For best game performance please choose a Pokémon who have at least one evolution and choose the last evolution to play!
 
 ### Executing from IDE 
 
