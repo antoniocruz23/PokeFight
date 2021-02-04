@@ -35,5 +35,6 @@ For the two players, the currently mapped keys are as following :
 
 ## Gameplay
 
+To see a full demo of the game click on the gif, or here <a href="https://youtu.be/T-OQ1LR27-Y" target="_blank">Video Demo</a> 
 
-![gameplay]()
+[![gameplay](https://j.gifs.com/GvLJqQ.gif)](https://youtu.be/T-OQ1LR27-Y)
