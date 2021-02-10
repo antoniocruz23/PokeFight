@@ -110,7 +110,6 @@ public class Board extends JPanel implements ActionListener {
         FontMetrics fm = getFontMetrics(font);
 
         setBackground(Color.black);
-        setIngame(false);
         timeLabel.setVisible(false);
         Ui.musicBackground.stop();
 
@@ -128,6 +127,7 @@ public class Board extends JPanel implements ActionListener {
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString(msg, (settings.getGAME_WIDTH() - fm.stringWidth(msg)) / 2, settings.getGAME_HEIGHT() / 2);
+        setIngame(false);
     }
 
     @Override
@@ -266,7 +266,7 @@ public class Board extends JPanel implements ActionListener {
             } else {
                 ((Timer) (e.getSource())).stop();
                 timeLabel.setText("");
-                ingame = false;
+                setIngame(false);
             }
         });
         timer.setInitialDelay(0);
