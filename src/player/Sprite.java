@@ -29,11 +29,6 @@ public class Sprite {
         image = ImageIO.read(url);
     }
 
-    public void specialAttackImage(String specialAttackImage) {
-        ImageIcon ii = new ImageIcon(specialAttackImage);
-        image = ii.getImage();
-    }
-
     public void getImageDimensions() {
 
         width = image.getWidth(null);

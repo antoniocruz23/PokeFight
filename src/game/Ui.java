@@ -35,8 +35,8 @@ public class Ui extends JFrame {
         setTitle("Poke Fight");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        musicBackground.play();
-        musicBackground.setLoop(10);
+        //musicBackground.play();
+        //musicBackground.setLoop(10);
         createUI();
     }
 
@@ -116,7 +116,7 @@ public class Ui extends JFrame {
     ActionListener startGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
             setVisibleFalse();
-            buttonSound.play();
+            //buttonSound.play();
 
             try {
                 add(new Board("newGame"));
@@ -130,7 +130,7 @@ public class Ui extends JFrame {
     ActionListener loadGame = new ActionListener() {
         public void actionPerformed(ActionEvent actionEvent) {
             setVisibleFalse();
-            buttonSound.play();
+            //buttonSound.play();
 
             Board board = null;
             try {

@@ -3,6 +3,7 @@ package player;
 import game.Settings;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class SpecialAttack extends Sprite {
 
@@ -11,7 +12,7 @@ public class SpecialAttack extends Sprite {
     private String attackSprite;
 
 
-    public SpecialAttack(int x, int y, String attackSprite) {
+    public SpecialAttack(int x, int y, String attackSprite) throws IOException {
         super(x, y);
 
         this.attackSprite = attackSprite;
@@ -19,9 +20,9 @@ public class SpecialAttack extends Sprite {
         initSpecialAttack();
     }
 
-    private void initSpecialAttack() {
+    private void initSpecialAttack() throws IOException {
 
-        specialAttackImage(attackSprite);
+        loadImage(attackSprite);
         getImageDimensions();
         getRect();
     }

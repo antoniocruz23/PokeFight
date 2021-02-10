@@ -71,7 +71,7 @@ public class Player extends Sprite {
         return specialAttacks;
     }
 
-    public void specialAttack(String attackSprite) {
+    public void specialAttack(String attackSprite) throws IOException {
         specialAttacks.add(new SpecialAttack(x + getWidth(), y + getHeight() / 2, attackSprite));
     }
 
@@ -100,7 +100,7 @@ public class Player extends Sprite {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE && getPLAYER_SIDE() == 1) {
-            specialAttack("resources/images/blue-fireball-p1.gif");
+            specialAttack("https://raw.githubusercontent.com/antoniocruz23/PokeFight/main/resources/images/blue-fireball-p1.gif");
             return;
         }
 
@@ -135,7 +135,7 @@ public class Player extends Sprite {
         /* PLAYER 2 CONTROLLER */
 
         if (key == KeyEvent.VK_ENTER && getPLAYER_SIDE() == 0) {
-            specialAttack("resources/images/blue-fireball-p2.gif");
+            specialAttack("https://raw.githubusercontent.com/antoniocruz23/PokeFight/main/resources/images/blue-fireball-p2.gif");
             return;
         }
 
