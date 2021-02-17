@@ -1,5 +1,5 @@
-charmander
-squirtle
-230
-230
-29
+enter pokemon name - p1
+enter pokemon name - p2
+130
+150
+142

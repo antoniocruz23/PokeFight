@@ -29,6 +29,9 @@ public class Settings {
 
     private final String UI_BACKGROUND_COLOR = "#F5A53C";
 
+    private final String backgroundMusic = "/resources/music/music.midi";
+    private final String buttonSound = "/resources/music/button.wav";
+
     public int getGAME_WIDTH() {
         return GAME_WIDTH;
     }
@@ -135,5 +138,13 @@ public class Settings {
 
     public void setPLAYER2_HEALTH(int PLAYER2_HEALTH) {
         this.PLAYER2_HEALTH = PLAYER2_HEALTH;
+    }
+
+    public String getBackgroundMusic() {
+        return backgroundMusic;
+    }
+
+    public String getButtonSound() {
+        return buttonSound;
     }
 }

@@ -54,12 +54,10 @@ public class SpecialAttack extends Sprite {
     public void intersects(Player player) {
 
         if(getRect().intersects(player.getRect())){
-//            System.out.println("touch-----------------------" + x);
 
             player.setIntersected(true);
             player.getDamage();
             setVisible(false);
         }
-//        System.out.println(x + " SPECIAL ATTACK");
     }
 }

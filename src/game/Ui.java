@@ -16,10 +16,10 @@ public class Ui extends JFrame {
     private JButton loadButton;
     private static JTextField P1_POKE_NAME;
     private static JTextField P2_POKE_NAME;
-    private final Settings settings = new Settings();
+    private static Settings settings = new Settings();
 
-    static Music musicBackground = new Music("/resources/music/music.midi");
-    private final Music buttonSound = new Music("/resources/music/button.wav");
+    static Music backgroundMusic = new Music(settings.getBackgroundMusic());
+    private final Music buttonSound = new Music(settings.getButtonSound());
 
     private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     private final Font normalFont = new Font("Times New Roman", Font.PLAIN, 30);
@@ -35,8 +35,8 @@ public class Ui extends JFrame {
         setTitle("Poke Fight");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        musicBackground.play();
-        musicBackground.setLoop(10);
+        backgroundMusic.play();
+        backgroundMusic.setLoop(10);
         createUI();
     }
 

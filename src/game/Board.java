@@ -111,7 +111,7 @@ public class Board extends JPanel implements ActionListener {
 
         setBackground(Color.black);
         timeLabel.setVisible(false);
-        Ui.musicBackground.stop();
+        Ui.backgroundMusic.stop();
 
         if(player1.getHealth() <= 0){
             msg = player2.getPokemon().getPokeName().toUpperCase() + " WIN!!";
